@@ -61,3 +61,6 @@ gem 'sidekiq-cron'
 # Presentation-related gems
 gem 'draper'
 gem 'kaminari'
+
+# Devise and likenesses
+gem 'devise'
