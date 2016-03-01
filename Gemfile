@@ -67,3 +67,4 @@ gem 'kaminari'
 
 # Devise and likenesses
 gem 'devise'
+gem 'pundit'
