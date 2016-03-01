@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :category do
-    title 'Test Category'
+    title { Faker::Commerce.department }
     refund_percentage 50
   end
 end
