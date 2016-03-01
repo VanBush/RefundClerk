@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160301142216) do
+ActiveRecord::Schema.define(version: 20160301171843) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "title"
@@ -25,11 +25,11 @@ ActiveRecord::Schema.define(version: 20160301142216) do
     t.boolean  "approved"
     t.string   "title"
     t.string   "description"
-    t.decimal  "amount",           precision: 5, scale: 2
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.decimal  "amount",      precision: 5, scale: 2
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
     t.integer  "user_id"
-    t.string   "rejection_reason"
+    t.integer  "status",                              default: 0
   end
 
   add_index "refund_requests", ["category_id"], name: "index_refund_requests_on_category_id"

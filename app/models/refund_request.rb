@@ -9,4 +9,6 @@ class RefundRequest < ActiveRecord::Base
   validates :title, presence: true, length: { maximum: 50 }
 
   validates :amount, numericality: { greater_than: 0 }
+
+  enum status: { pending: 0, accepted: 1, rejected: 2 }
 end
