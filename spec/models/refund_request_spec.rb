@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe RefundRequest, type: :model do
   let(:user) { FactoryGirl.create :user }
-  let(:category) { FactoryGirl.create :category }
+  let(:category) { FactoryGirl.create :category, refund_percentage: 30 }
   let(:refund_request) { FactoryGirl.create :refund_request,
                                             user_id: user.id,
                                             category_id: category.id }
@@ -67,6 +67,14 @@ RSpec.describe RefundRequest, type: :model do
     before { refund_request.rejection_reason = 'because of reasons'
              refund_request.status = "rejected" }
     it { is_expected.to be_valid }
+  end
+
+  describe '#refunded_amount' do
+    before { refund_request.amount = 150 }
+    it { is_expected.to respond_to(:refunded_amount) }
+    it 'should calculate the refunded amount based on category\'s percentage' do
+      expect(refund_request.refunded_amount).to eql(45)
+    end
   end
 
 end

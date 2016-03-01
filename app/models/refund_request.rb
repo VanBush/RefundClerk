@@ -15,4 +15,8 @@ class RefundRequest < ActiveRecord::Base
 
   validates :rejection_reason, presence: true, if: 'rejected?'
 
+  def refunded_amount
+    amount * category.refund_percentage / 100
+  end
+
 end
