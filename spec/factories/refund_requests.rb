@@ -3,6 +3,6 @@ FactoryGirl.define do
     title Faker::Commerce.product_name
     description Faker::Lorem.paragraph
     amount Faker::Number.decimal(3, 2)
-    approved false
+    status :pending
   end
 end

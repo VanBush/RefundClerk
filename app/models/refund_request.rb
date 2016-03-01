@@ -11,4 +11,8 @@ class RefundRequest < ActiveRecord::Base
   validates :amount, numericality: { greater_than: 0 }
 
   enum status: { pending: 0, accepted: 1, rejected: 2 }
+  validates :status, presence: true
+
+  validates :rejection_reason, presence: true, if: 'rejected?'
+
 end
