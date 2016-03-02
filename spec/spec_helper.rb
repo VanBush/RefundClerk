@@ -89,4 +89,5 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+  config.alias_it_should_behave_like_to :it_has_behavior, 'has behavior:'
 end
