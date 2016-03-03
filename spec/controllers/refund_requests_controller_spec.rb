@@ -138,22 +138,39 @@ RSpec.describe RefundRequestsController, type: :controller do
       end
     end
   end
-  #
-  # describe 'DELETE #destroy' do
-  #   context 'when not logged in' do
-  #     it 'should redirect to sessions#new'
-  #   end
-  #
-  #   context 'when logged in' do
-  #     context 'as the item\'s owner' do
-  #       it 'should be ok'
-  #       it 'should update the item'
-  #     end
-  #
-  #     context 'as someone else' do
-  #       it 'should be unauthorized'
-  #     end
-  #   end
-  # end
+
+  describe 'DELETE #destroy' do
+    let(:request_params) { { id: users.first.refund_requests.first.id } }
+    it_has_behavior 'redirects to sessions#new if not logged in', :delete, :destroy
+
+    context 'when logged in' do
+      context 'as the item\'s owner' do
+        before { controller.stub(:current_user).and_return(users.first)
+                 delete :destroy, request_params }
+        it { is_expected.to redirect_to(refund_requests_url) }
+        it 'should delete the item' do
+          expect(users.first.refund_requests.count).to eq(0)
+        end
+      end
+
+      context 'as admin' do
+        before { controller.stub(:current_user).and_return(admin)
+                 delete :destroy, request_params }
+        it { is_expected.to redirect_to(refund_requests_url) }
+        it 'should delete the item' do
+          expect(users.first.refund_requests.count).to eq(0)
+        end
+      end
+
+      context 'as someone else' do
+        before { controller.stub(:current_user).and_return(users.second)
+                 delete :destroy, request_params }
+        it { is_expected.to have_http_status(403) }
+        it 'should not delete the item' do
+          expect(users.first.refund_requests.count).to eq(1)
+        end
+      end
+    end
+  end
 
 end
