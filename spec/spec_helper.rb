@@ -90,4 +90,5 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
   config.alias_it_should_behave_like_to :it_has_behavior, 'has behavior:'
+  Dir["./spec/support/**/*.rb"].sort.each { |f| require f}
 end
