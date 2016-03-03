@@ -44,6 +44,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'pundit-matchers'
+  gem 'rspec-collection_matchers'
 end
 
 group :development do
