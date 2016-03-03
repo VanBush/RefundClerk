@@ -29,4 +29,13 @@ class RefundRequestPolicy < ApplicationPolicy
       end
     end
   end
+
+  def permitted_attributes
+    if @user.admin?
+      [:title, :description, :amount, :category_id, :status, :rejection_reason]
+    else
+      [:title, :description, :amount, :category_id]
+    end
+  end
+
 end
