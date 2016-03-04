@@ -2,20 +2,42 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+  :css
+    h1 { font-size: x-large; }
+    body { background-color: white; font-family: helvetica, arial, sans-serif; }
+    a { text-decoration: none; }
+    a:link { color: navy; }
+    a:hover { color: royalblue; }
+    a:active { color: orange; }
+    td { border: 1px solid lavender; padding: 6px;}
+    table td:last-child { width: 50%; }
+    table td:first-child { width: 50%; }
+    div.table-container { max-width: 650px; }
+    table {
+      border-spacing: 0px;
+      border-collapse: separate;
+      width: 100%;
+      max-width: 100%;
+      margin: 0px auto;
+    }
+    thead td, tfoot td {  font-weight: bold; background-color: WhiteSmoke; }
+    thead td { text-align: center; }
+
   %body
     %h1
       ="Monthly summary of refunds: #{Date::MONTHNAMES[@month]} #{@year}"
-    %table{border: true}
-      %thead
-        %tr
-          %td Name
-          %td= "Accepted refunds in #{Date::MONTHNAMES[@month]} #{@year}"
-      %tfoot
-        %tr
-          %td Total
-          %td= @report_records.map { |r| r.total_refunds }.sum
-      %tbody
-        - @report_records.each do |r|
+    .table-container
+      %table
+        %thead
           %tr
-            %td= link_to r.full_name, refund_requests_url(user_id: r.user_id)
-            %td= r.total_refunds
+            %td Name
+            %td= "Accepted Refunds"
+        %tfoot
+          %tr
+            %td Total
+            %td= @report_records.map { |r| r.total_refunds }.sum
+        %tbody
+          - @report_records.each do |r|
+            %tr
+              %td= link_to r.full_name, refund_requests_url(user_id: r.user_id)
+              %td= r.total_refunds
