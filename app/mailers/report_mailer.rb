@@ -1,7 +1,7 @@
 class ReportMailer < ApplicationMailer
   default from: 'vanbush@example.com'
 
-  def report_email
+  def report_email(month, year)
     @users = User.all
     recipients = User.where(admin: true).pluck(:email)
     recipients.each do |recipient|
