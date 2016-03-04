@@ -45,6 +45,7 @@ group :development, :test do
   gem 'faker'
   gem 'pundit-matchers'
   gem 'rspec-collection_matchers'
+  gem 'dotenv-rails'
 end
 
 group :development do
