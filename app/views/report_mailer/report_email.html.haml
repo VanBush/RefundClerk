@@ -4,6 +4,18 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
   %body
     %h1
-      Welcome to example.com!
-    - @users.each do |user|
-      = user.full_name
+      ="Monthly summary of refunds: #{Date::MONTHNAMES[@month]} #{@year}"
+    %table{border: true}
+      %thead
+        %tr
+          %td Name
+          %td= "Accepted refunds in #{Date::MONTHNAMES[@month]} #{@year}"
+      %tfoot
+        %tr
+          %td Total
+          %td= @report_records.map { |r| r.total_refunds }.sum
+      %tbody
+        - @report_records.each do |r|
+          %tr
+            %td= link_to r.full_name, refund_requests_url(user_id: r.user_id)
+            %td= r.total_refunds
