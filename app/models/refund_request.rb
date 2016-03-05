@@ -15,6 +15,8 @@ class RefundRequest < ActiveRecord::Base
 
   validates :rejection_reason, presence: true, if: 'rejected?'
 
+  validate :edit_only_if_pending, on: :update
+
   def refunded_amount
     amount * category.refund_percentage / 100
   end
@@ -30,5 +32,13 @@ class RefundRequest < ActiveRecord::Base
       .where(created_at: month_start..month_end)
       .group(:user_id, :full_name)
   end
+
+  private
+
+    def edit_only_if_pending
+      if changes.except(:status, :rejection_reason).present? && !pending?
+        errors.add(:base, 'cannot be edited if already accepted or rejected')
+      end
+    end
 
 end

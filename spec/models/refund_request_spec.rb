@@ -77,4 +77,16 @@ RSpec.describe RefundRequest, type: :model do
     end
   end
 
+  describe 'can\'t be edited if already accepted' do
+    before { refund_request.update(status: :accepted)
+             refund_request.title = 'abcdef' }
+    it { is_expected.not_to be_valid }
+  end
+
+  describe 'can\'t be edited if already rejected' do
+    before { refund_request.update(status: :rejected, rejection_reason: 'hehe')
+             refund_request.title = 'abcdef' }
+    it { is_expected.not_to be_valid }
+  end  
+
 end
