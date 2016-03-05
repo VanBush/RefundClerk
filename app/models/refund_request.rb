@@ -26,16 +26,9 @@ class RefundRequest < ActiveRecord::Base
       .accepted
       .joins('JOIN users ON refund_requests.user_id = users.id')
       .joins('JOIN categories ON refund_requests.category_id = categories.id')
-      .select(:user_id, :full_name, 'sum(amount * refund_percentage / 100) total_refunds')
+      .select(:user_id, :full_name, 'sum(cast((amount * refund_percentage / 100) as decimal(5,2))) total_refunds')
       .where(created_at: month_start..month_end)
-      .group(:user_id)
+      .group(:user_id, :full_name)
   end
-
-  # def total_refunds(year, month)
-  #   month_start = Date.new(year, month)
-  #   month_end = month_start.end_of_month
-  #   accepted_requests = refund_requests.accepted.where(created_at: month_start..month_end)
-  #   accepted_requests.collect { |r| r.refunded_amount }.sum
-  # end
 
 end
