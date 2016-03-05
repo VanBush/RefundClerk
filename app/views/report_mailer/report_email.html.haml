@@ -35,9 +35,9 @@
         %tfoot
           %tr
             %td Total
-            %td= @report_records.map { |r| r.total_refunds }.sum
+            %td= number_to_currency(@report_records.map { |r| r.total_refunds }.sum)
         %tbody
           - @report_records.each do |r|
             %tr
               %td= link_to r.full_name, refund_requests_url(user_id: r.user_id)
-              %td= r.total_refunds
+              %td= number_to_currency(r.total_refunds)
