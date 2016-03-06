@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   # after_action :verify_authorized
 
   # Prevent CSRF attacks by raising an exception.
@@ -8,9 +10,12 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  decent_configuration do
-    strategy DecentExposure::StrongParametersStrategy
-  end
+  protected
+
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.for(:sign_up) << [:full_name]
+      devise_parameter_sanitizer.for(:account_update) << [:full_name]
+    end
 
   private
 
