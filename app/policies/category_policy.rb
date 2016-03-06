@@ -1,26 +1,26 @@
 class CategoryPolicy < ApplicationPolicy
   def index?
-    @user.present?
+    @user.present? && @user.admin?
   end
 
   def edit?
-    index? && @user.admin?
+    index?
   end
 
   def update?
-    edit?
+    index?
   end
 
   def new?
-    edit?
+    index?
   end
 
   def create?
-    edit?
+    index?
   end
 
   def destroy?
-    edit?
+    index?
   end
 
 end
