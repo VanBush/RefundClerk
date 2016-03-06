@@ -103,3 +103,37 @@ a.status-rejected {
   color: rgb(138, 32, 8);
   font-weight: bold;
 }
+
+.authform {
+  padding-top: 30px;
+  margin: 0 auto;
+}
+.authform form {
+  @extend .well;
+  @extend .well-lg;
+  padding-bottom: 40px;
+  background-color: rgb(242, 242, 242);
+
+}
+.authform .right {
+  float: right !important;
+}
+.authform .button {
+  @extend .btn;
+  @extend .btn-primary;
+}
+.authform fieldset {
+  @extend .well;
+}
+#error_explanation {
+  @extend .alert;
+  @extend .alert-danger;
+}
+#error_explanation h2 {
+  font-size: 16px;
+}
+.button-xs {
+  @extend .btn;
+  @extend .btn-primary;
+  @extend .btn-xs;
+}

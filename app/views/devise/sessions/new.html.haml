@@ -1,0 +1,22 @@
+
+.row
+  .col-xs-6.col-xs-offset-3
+    %h2 Sign in
+    .authform
+      = form_for(resource, as: resource_name, url: session_path(resource_name), :html => { :role => 'form'} ) do |f|
+        .form-group
+          = f.label :email
+          %br
+          = f.email_field :email, autofocus: true, class: 'form-control'
+        .form-group
+          = f.label :password
+          %br
+          = f.password_field :password, autocomplete: "off", class: 'form-control'
+
+        = f.submit "Log in", :class => 'btn btn-primary pull-right'
+        - if devise_mapping.rememberable?
+          .checkbox{:style => "width:150px"}
+            %label
+              = f.check_box :remember_me
+              Remember me
+        = render "devise/shared/links"
