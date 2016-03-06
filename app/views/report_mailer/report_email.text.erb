@@ -1,4 +1,7 @@
-Welcome to example.com!
-=======================
+<%="Monthly summary of refunds: #{Date::MONTHNAMES[@month]} #{@year}" %>
+==================================================================
 
-kaksoispiste dee
+<%= "#{'Name'.ljust(40)} Accepted Refunds" %>
+<%- @report_records.each do |r| %>
+<%= "#{r.full_name.ljust(40)}#{number_to_currency(r.total_refunds)}" %>
+<% end -%>
