@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
-  after_action :verify_authorized
+  # after_action :verify_authorized
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -12,9 +12,11 @@ class ApplicationController < ActionController::Base
 
     def user_not_authorized(exception)
       if user_signed_in?
-        redirect_to root_url, alert: exception.message, status: :forbidden
+        human_name = exception.policy.record.model_name.human
+        redirect_to root_url,
+                    alert: "You are not allowed to access this #{human_name}"
       else
-        redirect_to new_user_session_url, alert: 'Please sign in.'
+        render 'devise/sessions/new', alert: 'Please sign in.'
       end
     end
 end

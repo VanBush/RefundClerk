@@ -2,9 +2,9 @@ class RefundRequestsController < ApplicationController
   def index
     authorize RefundRequest
     @refund_requests = policy_scope(RefundRequest)
-    @refund_requests.select! { |r| r.user_id == params[:user_id] } if params[:user_id].present?
-    @refund_requests.select! { |r| r.category_id == params[:category_id] } if params[:category_id].present?
-    @refund_requests
+    @refund_requests.where!(user_id: params[:user]) if params[:user].present?
+    @refund_requests.where!(user_id: params[:category]) if params[:category].present?
+    @refund_requests = @refund_requests.decorate
   end
 
   def show

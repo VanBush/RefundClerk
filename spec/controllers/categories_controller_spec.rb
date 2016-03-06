@@ -12,10 +12,10 @@ RSpec.describe CategoriesController, type: :controller do
     context 'when logged in as normal user' do
       before { controller.stub(:current_user).and_return(user)
                send method, action, request_params }
-      it { is_expected.to have_http_status(403) }
+      it { is_expected.to have_http_status(302) }
     end
 
-    it_has_behavior 'redirects to sessions#new if not logged in', method, action
+    it_has_behavior 'renders devise/sessions/new if not logged in', method, action
   end
 
   describe 'GET #index' do
@@ -24,7 +24,7 @@ RSpec.describe CategoriesController, type: :controller do
       it_has_behavior 'successfully renders template', :get, :index
     end
 
-    it_has_behavior 'redirects to sessions#new if not logged in', :get, :index
+    it_has_behavior 'renders devise/sessions/new if not logged in', :get, :index
   end
 
   describe 'GET #new' do

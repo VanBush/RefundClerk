@@ -14,7 +14,7 @@ RSpec.describe RefundRequestsController, type: :controller do
   subject { response }
 
   describe 'GET #index' do
-    it_has_behavior 'redirects to sessions#new if not logged in', :get, :index
+    it_has_behavior 'renders devise/sessions/new if not logged in', :get, :index
 
     context 'when logged in as an user' do
       before { controller.stub(:current_user).and_return(users.first) }
@@ -29,7 +29,7 @@ RSpec.describe RefundRequestsController, type: :controller do
 
   describe 'GET #show' do
     let(:request_params) { { id: RefundRequest.first.id } }
-    it_has_behavior 'redirects to sessions#new if not logged in', :get, :show
+    it_has_behavior 'renders devise/sessions/new if not logged in', :get, :show
 
     context 'when logged in as an user' do
       context 'and accessing that user\'s item' do
@@ -41,7 +41,7 @@ RSpec.describe RefundRequestsController, type: :controller do
       context 'and accessing another user\'s item' do
         before { controller.stub(:current_user).and_return(users.first)
                  get :show, id: users.second.refund_requests.first }
-        it { is_expected.to have_http_status(403) }
+        it { is_expected.to have_http_status(302) }
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe RefundRequestsController, type: :controller do
   end
 
   describe 'GET #new' do
-    it_has_behavior 'redirects to sessions#new if not logged in', :get, :new
+    it_has_behavior 'renders devise/sessions/new if not logged in', :get, :new
 
     context 'when logged in' do
       before { controller.stub(:current_user).and_return(users.first) }
@@ -66,7 +66,7 @@ RSpec.describe RefundRequestsController, type: :controller do
                                FactoryGirl.attributes_for(:refund_request,
                                category_id: category.id)
                              } }
-    it_has_behavior 'redirects to sessions#new if not logged in', :post, :create
+    it_has_behavior 'renders devise/sessions/new if not logged in', :post, :create
 
     context 'when logged in' do
       before { controller.stub(:current_user).and_return(users.first) }
@@ -79,7 +79,7 @@ RSpec.describe RefundRequestsController, type: :controller do
 
   describe 'GET #edit' do
     let(:request_params) { { id: RefundRequest.first.id } }
-    it_has_behavior 'redirects to sessions#new if not logged in', :get, :edit
+    it_has_behavior 'renders devise/sessions/new if not logged in', :get, :edit
 
     context 'when logged in as an user' do
       context 'and accessing that user\'s item' do
@@ -91,7 +91,7 @@ RSpec.describe RefundRequestsController, type: :controller do
       context 'and accessing another user\'s item' do
         before { controller.stub(:current_user).and_return(users.first)
           get :edit, id: users.second.refund_requests.first }
-        it { is_expected.to have_http_status(403) }
+        it { is_expected.to have_http_status(302) }
       end
 
       context 'when logged in as admin' do
@@ -106,7 +106,7 @@ RSpec.describe RefundRequestsController, type: :controller do
   describe 'PATCH #update' do
     let(:request_params) { { id: users.first.refund_requests.first.id,
                              refund_request: { title: 'blabla' } } }
-    it_has_behavior 'redirects to sessions#new if not logged in', :patch, :update
+    it_has_behavior 'renders devise/sessions/new if not logged in', :patch, :update
 
     context 'when logged in' do
       context 'as the item\'s owner' do
@@ -121,14 +121,14 @@ RSpec.describe RefundRequestsController, type: :controller do
       context 'as someone else' do
         before { controller.stub(:current_user).and_return(users.second)
                  patch :update, request_params }
-        it { is_expected.to have_http_status(403) }
+        it { is_expected.to have_http_status(302) }
       end
     end
   end
 
   describe 'DELETE #destroy' do
     let(:request_params) { { id: users.first.refund_requests.first.id } }
-    it_has_behavior 'redirects to sessions#new if not logged in', :delete, :destroy
+    it_has_behavior 'renders devise/sessions/new if not logged in', :delete, :destroy
 
     context 'when logged in' do
       context 'as the item\'s owner' do
@@ -152,7 +152,7 @@ RSpec.describe RefundRequestsController, type: :controller do
       context 'as someone else' do
         before { controller.stub(:current_user).and_return(users.second)
                  delete :destroy, request_params }
-        it { is_expected.to have_http_status(403) }
+        it { is_expected.to have_http_status(302) }
         it 'should not delete the item' do
           expect(users.first.refund_requests.count).to eq(1)
         end

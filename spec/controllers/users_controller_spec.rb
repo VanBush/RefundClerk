@@ -8,7 +8,7 @@ RSpec.describe UsersController, type: :controller do
   subject { response }
 
   describe 'GET #index' do
-    it_has_behavior 'redirects to sessions#new if not logged in', :get, :index
+    it_has_behavior 'renders devise/sessions/new if not logged in', :get, :index
 
     context 'when logged in as admin' do
       before { controller.stub(:current_user).and_return(admin) }
@@ -18,7 +18,7 @@ RSpec.describe UsersController, type: :controller do
     context 'when logged in as a normal user' do
       before { controller.stub(:current_user).and_return(user)
                get :index }
-      it { is_expected.to have_http_status(403) }
+      it { is_expected.to have_http_status(302) }
     end
 
   end
