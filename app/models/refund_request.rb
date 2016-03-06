@@ -1,4 +1,6 @@
 class RefundRequest < ActiveRecord::Base
+  extend Filterable
+
   belongs_to :category
   belongs_to :user
 
@@ -34,6 +36,10 @@ class RefundRequest < ActiveRecord::Base
   end
 
   private
+
+    def self.allowed_filters
+      [:user, :category, :status]
+    end
 
     def edit_only_if_pending
       if changes.except(:status, :rejection_reason).present? && !pending?

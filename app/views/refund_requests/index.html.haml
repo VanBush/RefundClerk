@@ -1,4 +1,7 @@
 %h1 Refund Requests
+%h4
+  - filters_tag
+%h5 To apply filtering by user, category or status, click the respective field.
 
 %table.table
   %thead
@@ -14,6 +17,10 @@
       - if user_signed_in? && current_user.admin?
         %th
 
+  -# %tfoot
+  -#   %tr
+  -#     %td.text-center{colspan: 8} jasdoijo
+
   %tbody
     - @refund_requests.each do |refund_request|
       %tr
@@ -27,6 +34,7 @@
         %td= refund_request.status
         - if user_signed_in? && current_user.admin?
           %td= refund_request.delete_link
+
 
 %br
 

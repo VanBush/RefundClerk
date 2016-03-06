@@ -17,14 +17,14 @@ class RefundRequestDecorator < Draper::Decorator
   end
 
   def status
-    h.content_tag :span, class: "status-#{object.status}" do
-      object.status
-    end
+    h.link_to object.status, h.add_filter_url(status: object.status),
+              class: "status-#{object.status}"
   end
 
   def category
     text = object.category.title
-    return h.link_to text, object.category if h.current_user.admin?
+    return h.link_to text,
+           h.add_filter_url(category: object.category) if h.current_user.admin?
     text
   end
 
@@ -37,7 +37,7 @@ class RefundRequestDecorator < Draper::Decorator
   end
 
   def user
-    h.link_to object.user.full_name, h.refund_requests_url(user: object.user)
+    h.link_to object.user.full_name, h.add_filter_url(user: object.user)
   end
 
 end
