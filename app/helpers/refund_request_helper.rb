@@ -1,13 +1,13 @@
 module RefundRequestHelper
   def filters_tag
-    any_filter = false
     haml_tag :div, class: 'filters' do
       allowed_model_filters.each { |key, value| model_filter_button key, value }
       allowed_field_filters.each { |field| field_filter_button field }
     end
     haml_tag :h5 do
-      haml_concat 'To apply filtering by user, category or status,
-                   click the respective field.'
+      haml_concat "To apply filtering by
+                   #{current_user.admin? ? 'user, ' : ''}
+                   category or status, click on the respective field."
     end unless any_filter?
   end
 

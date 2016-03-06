@@ -24,8 +24,7 @@ class RefundRequestDecorator < Draper::Decorator
   def category
     text = object.category.title
     return h.link_to text,
-           h.add_filter_url(category: object.category) if h.current_user.admin?
-    text
+           h.add_filter_url(category: object.category)
   end
 
   def amount
