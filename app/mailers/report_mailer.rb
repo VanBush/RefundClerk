@@ -1,15 +1,12 @@
 class ReportMailer < ApplicationMailer
-  default from: 'vanbush@example.com'
+  default from: 'no-reply@refundclerk.herokuapp.com',
+          to: Proc.new { User.where(admin: true).pluck(:email) }
 
   def report_email(month, year, report)
     @report_records = report
     @month = month
     @year = year
-    recipients = User.where(admin: true).pluck(:email)
-    recipients.each do |recipient|
-      mail(from: 'vanbush@example.com',
-           to: recipient,
-           subject: 'test')
-    end
+    mail(from: 'no-reply@refundclerk.herokuapp.com',
+         subject: "[RefundClerk] Monthly report: #{month}/#{year}")
   end
 end
