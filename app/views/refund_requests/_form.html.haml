@@ -1,0 +1,10 @@
+= form_for @refund_request do |f|
+  - if @refund_request.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@refund_request.errors.count, "error")} prohibited this refund_request from being saved:"
+      %ul
+        - @refund_request.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'

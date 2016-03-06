@@ -1,0 +1,33 @@
+%h1 Refund Requests
+
+%table.table
+  %thead
+    %tr
+      - if user_signed_in? && current_user.admin?
+        %th User
+      %th Name
+      %th Category
+      %th Amount
+      %th Refund
+      %th Submitted
+      %th Status
+      - if user_signed_in? && current_user.admin?
+        %th
+
+  %tbody
+    - @refund_requests.each do |refund_request|
+      %tr
+        - if user_signed_in? && current_user.admin?
+          %td= refund_request.user
+        %td= refund_request.details_link
+        %td= refund_request.category
+        %td= refund_request.amount
+        %td= refund_request.refund
+        %td= refund_request.created_at
+        %td= refund_request.status
+        - if user_signed_in? && current_user.admin?
+          %td= refund_request.delete_link
+
+%br
+
+= link_to 'New Refund request', new_refund_request_path

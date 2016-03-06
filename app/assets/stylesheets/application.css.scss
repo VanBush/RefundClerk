@@ -13,5 +13,93 @@
  *= require_tree .
  *= require_self
  */
+ $navbar-default-bg: #603dc2;
+ $navbar-default-link-color: #fff;
+ $navbar-default-color: #fff;
+ $breadcrumb-bg: #ffb06f;
+ $breadcrumb-color: #fff;
+ $link-color: navy;
+
  @import "bootstrap-sprockets";
  @import "bootstrap";
+ @import url('//fonts.googleapis.com/css?family=Raleway:400,200,700');
+
+  a:link, a:visited {
+   color: $link-color;
+ }
+
+ body {
+   font-family: raleway, sans-serif;
+   padding-top: 70px;
+   padding-bottom: 70px;
+ }
+
+.navbar-default {
+  .navbar-nav {
+     > .open > a:link {
+       background-color: #5435a9;
+       color: #aa98db;
+     }
+     > :not(.open) > a:hover {
+       color: #aa98db;
+     }
+   }
+ }
+
+ body {
+   padding-top: 70px;
+   padding-bottom: 20px;
+   font-family: Raleway, sans-serif;
+ }
+ .jumbotron {
+   background-image: url(guitars.jpg);
+   background-position: bottom;
+   &.no-background {
+     background-image: none;
+   }
+ }
+ .nav .breadcrumb {
+     margin: 0 7px;
+ }
+ @media (min-width: 768px) {
+   .nav .breadcrumb {
+     float: right;
+     margin: 7px 10px;
+   }
+ }
+
+ .float-right {
+   float: right;
+ }
+ .no-vertical-margins {
+   margin-top: 0px;
+   margin-bottom: 0px;
+ }
+
+ // Some utility classes for aligning text to both sides in one line.
+
+ .clear-both {
+   clear: both;
+   .left {
+     float: left;
+   }
+   .right {
+     float: right;
+   }
+ }
+
+ table.summary-table {
+   td.left {
+     font-weight: bold;
+   }
+ }
+
+.status-accepted {
+  color: rgb(0, 111, 4);
+  font-weight: bold;
+}
+
+.status-rejected {
+  color: rgb(138, 32, 8);
+  font-weight: bold;
+}
