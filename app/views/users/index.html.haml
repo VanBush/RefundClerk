@@ -1,19 +1,24 @@
-%h1 Listing users
+%h1 Users
 
-%table
+%table.table
   %thead
     %tr
-      %th
-      %th
+      %th Name
+      %th Requests
+      %th Pending
+      %th Accepted
+      %th Rejected
+      %th Total refunds
       %th
 
   %tbody
     - @users.each do |user|
       %tr
-        %td= link_to 'Show', user
-        %td= link_to 'Edit', edit_user_path(user)
-        %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= user.full_name
+        %td= user.request_count(:all)
+        %td= user.request_count(:pending)
+        %td= user.request_count(:accepted)
+        %td= user.request_count(:rejected)
+        %th= user.total_refunds
 
 %br
-
-= link_to 'New User', new_user_path

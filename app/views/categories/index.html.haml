@@ -1,18 +1,20 @@
 %h1 Categories
 
-%table
+%table.table
   %thead
     %tr
       %th Title
       %th Refund percentage
       %th
+      %th
 
   %tbody
     - @categories.each do |category|
       %tr
-        %td= link_to category.title, refund_requests_url(category: category)
-        %td= link_to 'Edit', edit_category_path(category)
-        %td= link_to 'Delete', category, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= category.title
+        %td= category.refund_percentage
+        %td= category.edit_link
+        %td= category.delete_link
 
 %br
 
