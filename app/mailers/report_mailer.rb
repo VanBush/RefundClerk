@@ -8,7 +8,7 @@ class ReportMailer < ApplicationMailer
     recipients = User.where(admin: true).pluck(:email)
     recipients.each do |recipient|
       mail(from: 'vanbush@example.com',
-           to: User.where(admin: true).first.email,
+           to: recipient,
            subject: 'test')
     end
   end
