@@ -1,8 +1,9 @@
 class RefundRequestsController < ApplicationController
+  before_action :only_admin_can_filter_users, only: :index
+
   def index
     authorize RefundRequest
-    @refund_requests = policy_scope(RefundRequest)
-    @refund_requests = @refund_requests.filter(params)
+    @refund_requests = policy_scope(RefundRequest).filter(params)
     @refund_requests = @refund_requests.decorate
   end
 
@@ -54,5 +55,13 @@ class RefundRequestsController < ApplicationController
                   flash: { error: 'Refund request could not be deleted' }
     end
   end
+
+  private
+
+    def only_admin_can_filter_users
+      unless user_signed_in? && current_user.admin?
+        params.except!(:user)
+      end
+    end
 
 end
