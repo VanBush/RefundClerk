@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index]
 
-  resources :refund_requests
+  resources :refund_requests, only: [:index, :show, :update, :new, :create, :destroy]
 
   resources :categories, only: [:index, :edit, :update, :new, :create, :destroy]
 

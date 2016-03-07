@@ -1,6 +1,7 @@
-%p#notice= notice
+%h1 Editing refund_request
 
+= render 'form'
 
-= link_to 'Edit', edit_refund_request_path(@refund_request)
+= link_to 'Show', @refund_request
 \|
 = link_to 'Back', refund_requests_path
