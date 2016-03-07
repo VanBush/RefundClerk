@@ -49,6 +49,7 @@ group :development, :test do
   gem 'pundit-matchers'
   gem 'rspec-collection_matchers'
   gem 'dotenv-rails'
+  gem 'capybara'
 end
 
 group :development do
