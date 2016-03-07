@@ -23,7 +23,7 @@ class RefundRequestsController < ApplicationController
     authorize @refund_request
     @refund_request.assign_attributes(permitted_attributes(@refund_request))
     if @refund_request.save
-      redirect_to refund_request_path(@refund_request),
+      redirect_to refund_requests_path,
                   notice: 'Refund request has been created'
     else
       render :new, flash: { error: 'Refund request could not be created' }
@@ -39,9 +39,10 @@ class RefundRequestsController < ApplicationController
     @refund_request = RefundRequest.find(params[:id]).decorate
     authorize @refund_request
     if @refund_request.update_attributes(permitted_attributes(@refund_request))
-      render :show, notice: 'Refund request has been updated'
+      flash.now[:notice] = 'Refund request has been updated'
+      render :show
     else
-      render :new, flash: { error: 'Refund request could not be updated' }
+      render :show, flash: { error: 'Refund request could not be updated' }
     end
   end
 

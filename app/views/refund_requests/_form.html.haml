@@ -1,10 +1,28 @@
-= form_for @refund_request do |f|
-  - if @refund_request.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@refund_request.errors.count, "error")} prohibited this refund_request from being saved:"
-      %ul
-        - @refund_request.errors.full_messages.each do |msg|
-          %li= msg
-
-  .actions
-    = f.submit 'Save'
+.authform
+  = form_for @refund_request do |f|
+    - if @refund_request.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@refund_request.errors.count, "error")} prohibited this refund request from being saved:"
+        %ul
+          - @refund_request.errors.full_messages.each do |msg|
+            %li= msg
+    .form-group
+      = f.label :title
+      = f.text_field :title, autofocus: true, class: 'form-control', disabled: !@refund_request.pending?
+    .form-group
+      = f.label :description
+      = f.text_area :description, class: 'form-control', disabled: !@refund_request.pending?
+    .form-group
+      = f.label :category
+      = f.collection_select :category_id, Category.all, :id, :title, {}, class: 'form-control', disabled: !@refund_request.pending?
+    .form-group
+      = f.label :amount
+      = f.number_field :amount, class: 'form-control', step: 0.01, disabled: !@refund_request.pending?
+    .form-group
+      = f.label :status
+      = f.collection_select :status, RefundRequest.statuses.map{ |s| [s.first, s.first.humanize] }, :first, :second, {}, class: 'form-control', disabled: !current_user.admin?
+    .form-group
+      = f.label :rejection_reason
+      = f.text_area :rejection_reason, class: 'form-control', disabled: !current_user.admin?
+    .actions
+      = f.submit 'Save', :class => 'btn btn-primary'

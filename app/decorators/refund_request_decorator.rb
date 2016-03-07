@@ -27,7 +27,7 @@ class RefundRequestDecorator < Draper::Decorator
            h.add_filter_url(category: object.category)
   end
 
-  def amount
+  def amount_currency
     h.number_to_currency(object.amount)
   end
 

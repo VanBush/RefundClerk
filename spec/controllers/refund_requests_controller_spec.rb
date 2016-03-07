@@ -77,32 +77,6 @@ RSpec.describe RefundRequestsController, type: :controller do
     end
   end
 
-  describe 'GET #edit' do
-    let(:request_params) { { id: RefundRequest.first.id } }
-    it_has_behavior 'renders devise/sessions/new if not logged in', :get, :edit
-
-    context 'when logged in as an user' do
-      context 'and accessing that user\'s item' do
-        let(:request_params) { { id: users.first.refund_requests.first } }
-        before { controller.stub(:current_user).and_return(users.first) }
-        it_has_behavior 'successfully renders template', :get, :edit
-      end
-
-      context 'and accessing another user\'s item' do
-        before { controller.stub(:current_user).and_return(users.first)
-          get :edit, id: users.second.refund_requests.first }
-        it { is_expected.to have_http_status(302) }
-      end
-
-      context 'when logged in as admin' do
-        let(:request_params) { { id: users.second.refund_requests.first } }
-        before { controller.stub(:current_user).and_return(admin) }
-        it_has_behavior 'successfully renders template', :get, :edit
-      end
-    end
-
-  end
-
   describe 'PATCH #update' do
     let(:request_params) { { id: users.first.refund_requests.first.id,
                              refund_request: { title: 'blabla' } } }
