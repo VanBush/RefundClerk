@@ -8,6 +8,11 @@
       %th
       %th
 
+  %tfoot
+    %tr
+      %td.text-center{colspan: 8}
+        =paginate @categories
+
   %tbody
     - @categories.each do |category|
       %tr

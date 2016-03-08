@@ -16,9 +16,10 @@
       - if user_signed_in? && current_user.admin?
         %th
 
-  -# %tfoot
-  -#   %tr
-  -#     %td.text-center{colspan: 8} jasdoijo
+  %tfoot
+    %tr
+      %td.text-center{colspan: 8}
+        =paginate @refund_requests
 
   %tbody
     - @refund_requests.each do |refund_request|

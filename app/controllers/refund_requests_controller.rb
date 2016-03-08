@@ -4,7 +4,8 @@ class RefundRequestsController < ApplicationController
   def index
     authorize RefundRequest
     @refund_requests = policy_scope(RefundRequest).filter(params)
-    @refund_requests = @refund_requests.decorate
+    @refund_requests = @refund_requests
+    @refund_requests = paginate(@refund_requests).decorate
   end
 
   def show

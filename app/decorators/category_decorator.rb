@@ -1,4 +1,4 @@
-class CategoryDecorator < Draper::Decorator
+class CategoryDecorator < ApplicationDecorator
   delegate_all
 
   def title

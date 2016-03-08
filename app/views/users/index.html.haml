@@ -11,6 +11,11 @@
       %th Total refunds
       %th
 
+  %tfoot
+    %tr
+      %td.text-center{colspan: 7}
+        =paginate @users
+
   %tbody
     - @users.each do |user|
       %tr

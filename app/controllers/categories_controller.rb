@@ -1,7 +1,8 @@
 class CategoriesController < ApplicationController
   def index
     authorize Category
-    @categories = Category.all.decorate
+    @categories = Category.all
+    @categories = paginate(@categories).decorate
   end
 
   def edit

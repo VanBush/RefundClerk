@@ -17,6 +17,12 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.for(:account_update) << [:full_name]
     end
 
+    def paginate(records)
+      records = records.page(params[:page] || 1)
+      records = records.per(params[:per] || 20)
+      records
+    end
+
   private
 
     def user_not_authorized(exception)

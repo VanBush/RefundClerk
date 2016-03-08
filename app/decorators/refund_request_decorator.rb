@@ -1,4 +1,4 @@
-class RefundRequestDecorator < Draper::Decorator
+class RefundRequestDecorator < ApplicationDecorator
   delegate_all
 
   def created_at
