@@ -2,7 +2,7 @@ class UserDecorator < Draper::Decorator
   delegate_all
 
   def full_name
-    h.link_to object.full_name, h.refund_requests_url(user: object)
+    h.link_to object.full_name, h.refund_requests_path(user: object)
   end
 
   def request_count(status)
