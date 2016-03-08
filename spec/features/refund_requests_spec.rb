@@ -32,7 +32,7 @@ RSpec.feature "RefundRequests", type: :feature do
     end
 
     context 'filtering' do
-      before { sign_in 'a@dmin.pl', 'admin123' 
+      before { sign_in 'a@dmin.pl', 'admin123'
                visit '/' }
 
       context 'has links to filter' do
@@ -54,7 +54,7 @@ RSpec.feature "RefundRequests", type: :feature do
           end
         end
       end
-      
+
       context 'after applied' do
         let(:refund_request) { RefundRequest.find_by(category: categories.first,
                                                      user: users.first,
@@ -77,9 +77,72 @@ RSpec.feature "RefundRequests", type: :feature do
           it { is_expected.not_to have_content(users.second) }
           it { is_expected.not_to have_content('accepted') }
         end
-        
+
       end
     end
+  end
+
+  context 'show/edit' do
+    let(:refund_request) { FactoryGirl.create :refund_request,
+                                              category: categories.first,
+                                              user: users.first,
+                                              title: 'Swag' }
+
+    shared_examples 'shows the fields for status and rejection reason' do |disabled|
+      let(:disabled?) { [true, :disabled].include? disabled }
+      before { visit '/'
+               click_link 'Swag' }
+      it { is_expected.to have_field('Status', type: 'select',
+                                               disabled: disabled?,
+                                               with: refund_request.status) }
+      it { is_expected.to have_field('Rejection reason', type: 'text',
+                                               disabled: disabled?) }
+      it { expect(page.find_field('Rejection reason', type: 'text', disabled: disabled?).value).to eq(refund_request.rejection_reason) }
+    end
+
+    shared_examples 'shows the fields for basic attributes' do |disabled|
+      let(:disabled?) { [true, :disabled].include? disabled }
+      before { visit '/'
+               click_link 'Swag' }
+      it { is_expected.to have_field('Title', type: 'text',
+                                              disabled: disabled?,
+                                              with: refund_request.title) }
+      it { is_expected.to have_field('Category', type: 'select',
+                                              disabled: disabled?,
+                                              with: refund_request.category.id) }
+      it { is_expected.to have_field('Description', type: 'text',
+                                              disabled: disabled?,
+                                              with: refund_request.description) }
+      it { is_expected.to have_field('Amount', type: 'number',
+                                              disabled: disabled?,
+                                              with: refund_request.amount) }
+    end
+
+    context 'as normal user' do
+      before { sign_in refund_request.user.email, refund_request.user.password }
+
+      subject { page }
+
+      context 'when pending' do
+        before { refund_request.update(status: :pending) }
+        it_has_behavior 'shows the fields for status and rejection reason', :disabled
+        it_has_behavior 'shows the fields for basic attributes', :enabled
+      end
+
+      context 'when accepted' do
+        before { refund_request.update(status: :accepted) }
+        it_has_behavior 'shows the fields for status and rejection reason', :disabled
+        it_has_behavior 'shows the fields for basic attributes', :disabled
+      end
+
+      context 'when rejected' do
+        before { refund_request.update(status: :rejected, rejection_reason: 'bo tak') }
+        it_has_behavior 'shows the fields for status and rejection reason', :disabled
+        it_has_behavior 'shows the fields for basic attributes', :disabled
+      end
+
+    end
+
   end
 
 end
