@@ -83,6 +83,7 @@ GEM
       activemodel (>= 3.0)
       activesupport (>= 3.0)
       request_store (~> 1.0)
+    enum_help (0.0.14)
     erubis (2.7.0)
     execjs (2.6.0)
     factory_girl (4.5.0)
@@ -229,6 +230,9 @@ GEM
       redis-namespace (>= 1.5.2)
       rufus-scheduler (>= 2.0.24)
       sidekiq (>= 4.0.0)
+    simple_form (3.2.1)
+      actionpack (> 4, < 5.1)
+      activemodel (> 4, < 5.1)
     slop (3.6.0)
     spring (1.6.4)
     sprockets (3.5.2)
@@ -270,6 +274,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   draper
+  enum_help
   factory_girl_rails
   faker
   haml-rails
@@ -289,6 +294,7 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq
   sidekiq-cron
+  simple_form
   spring
   sprockets (~> 3.0)
   sqlite3
