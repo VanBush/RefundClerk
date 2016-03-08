@@ -1,5 +1,6 @@
+Sidekiq::Cron::Job.destroy_all!
 Sidekiq::Cron::Job.create(
-	name: 'Ebin worker',
+	name: 'Report email worker',
 	cron: '*/1 * * * *',
 	class: 'ReportMailWorker'
 )
