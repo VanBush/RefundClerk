@@ -10,7 +10,6 @@ RSpec.feature "Users", type: :feature do
 
     it 'should list all users' do
       users.each do |u|
-        binding.pry
         expect(page).to have_link(u.full_name, href: refund_requests_path(user: u))
       end
     end
