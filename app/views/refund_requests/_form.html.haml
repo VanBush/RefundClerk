@@ -14,9 +14,10 @@
       = f.input :category_id, collection: Category.all, selected: @refund_request.category_id, as: :select, disabled: !@refund_request.pending?
     .form-group
       = f.input :amount, step: 0.01, disabled: !@refund_request.pending?
-    .check-boxes
-      = f.input :status, selected: RefundRequest.statuses.keys[@refund_request[:status]], disabled: !current_user.admin?
-    .form-group
-      = f.input :rejection_reason, class: 'form-control', disabled: !current_user.admin?
+    - unless current_page?(action: 'new')
+      .check-boxes
+        = f.input :status, selected: RefundRequest.statuses.keys[@refund_request[:status]], disabled: !current_user.admin?
+      .form-group
+        = f.input :rejection_reason, class: 'form-control', disabled: !current_user.admin?
     .actions
       = f.submit 'Save', :class => 'btn btn-primary'
